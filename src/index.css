@@ -7,3 +7,14 @@
 body {
 	font-family: "Poppins", sans-serif;
 }
+
+/* Scroll Bar */
+::-webkit-scrollbar {
+	@apply w-3;
+}
+::-webkit-scrollbar-track {
+	@apply bg-gray-300;
+}
+::-webkit-scrollbar-thumb {
+	@apply bg-gray-500 hover:bg-gray-600 rounded-xl;
+}
