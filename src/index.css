@@ -18,3 +18,8 @@ body {
 ::-webkit-scrollbar-thumb {
 	@apply bg-gray-500 hover:bg-gray-600 rounded-xl;
 }
+
+.custom-card-image .card.image-full:before {
+	border-radius: 0.5rem;
+	opacity: 0.40;
+}
