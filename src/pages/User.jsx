@@ -8,24 +8,25 @@ import { useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import Spinner from "../components/layout/Spinner";
 import GithubContext from "../context/github/GithubContext";
-import { getUser } from "../context/github/GithubActions";
+import { getUserAndRepos } from "../context/github/GithubActions";
+import RepoList from "../components/repos/RepoList";
 
 const User = () => {
-	const { user, loading, dispatch } = useContext(GithubContext);
+	const { user, loading, repos, dispatch } = useContext(GithubContext);
 
 	const params = useParams();
 
 	useEffect(() => {
 		dispatch({ type: "SET_LOADING" });
 
-		const getUSerData = async () => {
-			const userData = await getUser(params.login);
+		const getUserData = async () => {
+			const userData = await getUserAndRepos(params.login);
 
-			dispatch({ type: "GET_USER", payload: userData });
+			dispatch({ type: "GET_USER_AND_REPOS", payload: userData });
 		};
 
-		getUSerData();
-	}, []);
+		getUserData();
+	}, [dispatch, params.login]);
 
 	const {
 		name,
@@ -62,11 +63,19 @@ const User = () => {
 					<div className="custom-card-image mb-6 md:mb-0">
 						<div className="rounded-lg shadow-xl card image-full">
 							<figure>
-								<img src={avatar_url} alt="avatar" />
+								<img
+									src={avatar_url}
+									alt="avatar"
+									className="w-full h-full"
+								/>
 							</figure>
 							<div className="card-body justify-end">
-								<h2 className="card-title mb-0 text-gray-50">{name}</h2>
-								<p className="text-gray-200 text-[1.1rem]">{login}</p>
+								<h2 className="card-title mb-0 text-gray-50">
+									{name}
+								</h2>
+								<p className="text-gray-200 text-[1.1rem]">
+									{login}
+								</p>
 							</div>
 						</div>
 					</div>
@@ -196,6 +205,8 @@ const User = () => {
 					</div>
 				</div>
 			</div>
+
+			<RepoList repos={repos} />
 		</>
 	);
 };
